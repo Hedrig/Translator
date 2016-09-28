@@ -1,1 +1,2 @@
 D:\Learning\C#\Translator\TranslatorUI\bin\Debug\TranslatorUI.exe.config
+D:\Learning\C#\Translator\TranslatorUI\bin\Debug\Translator.exe.config
