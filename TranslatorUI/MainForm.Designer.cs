@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+            this.sourceRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.compileRichTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.resultRichTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,25 +46,25 @@
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // richTextBox2
+            // sourceRichTextBox
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(6, 20);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(362, 402);
-            this.richTextBox2.TabIndex = 1;
-            this.richTextBox2.Text = "";
+            this.sourceRichTextBox.Location = new System.Drawing.Point(6, 20);
+            this.sourceRichTextBox.Name = "sourceRichTextBox";
+            this.sourceRichTextBox.Size = new System.Drawing.Size(362, 402);
+            this.sourceRichTextBox.TabIndex = 1;
+            this.sourceRichTextBox.Text = "";
             // 
-            // richTextBox3
+            // compileRichTextBox
             // 
-            this.richTextBox3.Location = new System.Drawing.Point(6, 25);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(765, 222);
-            this.richTextBox3.TabIndex = 2;
-            this.richTextBox3.Text = "";
+            this.compileRichTextBox.Location = new System.Drawing.Point(6, 25);
+            this.compileRichTextBox.Name = "compileRichTextBox";
+            this.compileRichTextBox.Size = new System.Drawing.Size(765, 222);
+            this.compileRichTextBox.TabIndex = 2;
+            this.compileRichTextBox.Text = "";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.richTextBox2);
+            this.groupBox1.Controls.Add(this.sourceRichTextBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 46);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(374, 394);
@@ -74,7 +74,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.richTextBox1);
+            this.groupBox2.Controls.Add(this.resultRichTextBox);
             this.groupBox2.Location = new System.Drawing.Point(415, 46);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(374, 394);
@@ -82,17 +82,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Результат";
             // 
-            // richTextBox1
+            // resultRichTextBox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(6, 20);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(362, 402);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
+            this.resultRichTextBox.Location = new System.Drawing.Point(6, 20);
+            this.resultRichTextBox.Name = "resultRichTextBox";
+            this.resultRichTextBox.Size = new System.Drawing.Size(362, 402);
+            this.resultRichTextBox.TabIndex = 1;
+            this.resultRichTextBox.Text = "";
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.richTextBox3);
+            this.groupBox3.Controls.Add(this.compileRichTextBox);
             this.groupBox3.Location = new System.Drawing.Point(12, 446);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(777, 259);
@@ -124,13 +124,13 @@
             // открытьToolStripMenuItem
             // 
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.открытьToolStripMenuItem.Text = "Открыть";
             // 
             // сохранитьToolStripMenuItem
             // 
             this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.сохранитьToolStripMenuItem.Text = "Сохранить";
             // 
             // компиляцияToolStripMenuItem
@@ -144,7 +144,7 @@
             // выполнитьToolStripMenuItem
             // 
             this.выполнитьToolStripMenuItem.Name = "выполнитьToolStripMenuItem";
-            this.выполнитьToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.выполнитьToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
             this.выполнитьToolStripMenuItem.Text = "Выполнить";
             // 
             // MainForm
@@ -172,11 +172,11 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richTextBox2;
-        private System.Windows.Forms.RichTextBox richTextBox3;
+        private System.Windows.Forms.RichTextBox sourceRichTextBox;
+        private System.Windows.Forms.RichTextBox compileRichTextBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox resultRichTextBox;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
