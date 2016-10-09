@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IdentifierAlreadyDefinedException.cs" />
+    <Compile Include="IdentifierNotDefinedException.cs" />
     <Compile Include="Keyword.cs" />
     <Compile Include="Lexems.cs" />
     <Compile Include="LexicalAnalyzer.cs" />
