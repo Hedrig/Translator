@@ -11,6 +11,7 @@ namespace TranslatorLib
         None, Name, Number,
         Addition, Subtraction, Multiplication, Division, Assignment,
         OpenBracket, CloseBracket, Separator,
-        Equal, More, Less, MoreOrEqual, LessOrEqual, NotEqual
+        Equal, More, Less, MoreOrEqual, LessOrEqual, NotEqual,
+        EOF
     }
 }
