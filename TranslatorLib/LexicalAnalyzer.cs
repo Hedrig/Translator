@@ -11,6 +11,8 @@ namespace TranslatorLib
         static List<Keyword> keywords = new List<Keyword>();
         static Lexems currentLexem;
 
+        public static Lexems CurrentLexem { get{ return currentLexem; } }
+
         static void AddKeyword(string word, Lexems lexem)
         {
             keywords.Add(new Keyword(word, lexem));
@@ -19,9 +21,7 @@ namespace TranslatorLib
         static Lexems GetKeyword(string word)
         {
             foreach (Keyword keyword in keywords)
-            {
                 if (keyword.word.Equals(word)) return keyword.lexem;
-            }
             return Lexems.Name;
         }
 
