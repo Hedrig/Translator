@@ -22,6 +22,13 @@ namespace TranslatorLib
         Category category;
         Type type;
 
+        public Identifier(string name, Category category)
+        {
+            this.name = name;
+            this.category = category;
+            type = Type.None;
+        }
+
         public Identifier(string name, Category category, Type type)
         {
             this.name = name;
@@ -45,7 +52,7 @@ namespace TranslatorLib
             try { FindByName(name); }
             catch(IdentifierNotDefinedException)
             {
-                var id = new Identifier(name, category, type);
+                var id = new Identifier(name, category);
                 identifiers.AddLast(id);
                 return id;
             }
