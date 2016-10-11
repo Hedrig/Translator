@@ -36,11 +36,11 @@ namespace TranslatorLib
         internal Type Type { get { return type; } }
     }
 
-    class NameTable
+    static class NameTable
     {
-        LinkedList<Identifier> identifiers;
+        static LinkedList<Identifier> identifiers;
         
-        public Identifier AddIdentifier(string name, Category category, Type type)
+        static public Identifier AddIdentifier(string name, Category category, Type type)
         {
             try { FindByName(name); }
             catch(IdentifierNotDefinedException)
@@ -52,7 +52,7 @@ namespace TranslatorLib
             throw new IdentifierAlreadyDefinedException();
         }
 
-        public Identifier FindByName(string name)
+        static public Identifier FindByName(string name)
         {
             foreach (Identifier id in identifiers)
                 if (id.Name.Equals(name)) return id;
