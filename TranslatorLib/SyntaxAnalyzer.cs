@@ -11,7 +11,8 @@ namespace TranslatorLib
         static void CheckLexem(Lexems expectedLexem)
         {
             if (LexicalAnalyzer.CurrentLexem != expectedLexem)
-                throw new UnexpectedLexemError();
+                throw new UnexpectedLexemError("Ожидалась лексема " + expectedLexem + ", получена лексема " +
+                    LexicalAnalyzer.CurrentLexem);
             else
                 LexicalAnalyzer.DecodeLexem();
         }
@@ -19,7 +20,8 @@ namespace TranslatorLib
         static void DecodeVariableDeclaring()
         {
             LexicalAnalyzer.DecodeLexem();
-            if(LexicalAnalyzer.CurrentLexem != Lexems)
+            CheckLexem(Lexems.Identifier);
+
         }
     }
 }
