@@ -29,29 +29,11 @@ namespace TranslatorLib
             this.category = category;
         }
 
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+        public string Name { get { return name; } }
 
-        internal Category Category
-        {
-            get
-            {
-                return category;
-            }
-        }
+        internal Category Category { get { return category; } }
 
-        internal Type Type
-        {
-            get
-            {
-                return type;
-            }
-        }
+        internal Type Type { get { return type; } }
     }
 
     class NameTable
@@ -73,9 +55,7 @@ namespace TranslatorLib
         public Identifier FindByName(string name)
         {
             foreach (Identifier id in identifiers)
-            {
                 if (id.Name.Equals(name)) return id;
-            }
             throw new IdentifierNotDefinedException();
         }
     }
