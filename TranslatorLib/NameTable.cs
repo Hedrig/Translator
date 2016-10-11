@@ -46,11 +46,11 @@ namespace TranslatorLib
     static class NameTable
     {
         static LinkedList<Identifier> identifiers;
-        
-        static public Identifier AddIdentifier(string name, Category category, Type type)
+
+        static public Identifier AddIdentifier(string name, Category category)
         {
             try { FindByName(name); }
-            catch(IdentifierNotDefinedException)
+            catch (IdentifierNotDefinedException)
             {
                 var id = new Identifier(name, category);
                 identifiers.AddLast(id);
