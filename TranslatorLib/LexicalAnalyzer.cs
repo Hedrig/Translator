@@ -25,7 +25,7 @@ namespace TranslatorLib
             return Lexems.Name;
         }
 
-        static void DecodeLexem()
+        public static void DecodeLexem()
         {
             while (Reader.CurrentSymbol == ' ') Reader.ReadNextSymbol();
 
