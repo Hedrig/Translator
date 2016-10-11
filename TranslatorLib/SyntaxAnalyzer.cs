@@ -10,9 +10,16 @@ namespace TranslatorLib
     {
         static void CheckLexem(Lexems expectedLexem)
         {
-            if(LexicalAnalyzer.CurrentLexem != expectedLexem)
+            if (LexicalAnalyzer.CurrentLexem != expectedLexem)
                 throw new UnexpectedLexemError();
-            
+            else
+                LexicalAnalyzer.DecodeLexem();
+        }
+
+        static void DecodeVariableDeclaring()
+        {
+            LexicalAnalyzer.DecodeLexem();
+            if(LexicalAnalyzer.CurrentLexem != Lexems)
         }
     }
 }
