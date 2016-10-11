@@ -19,10 +19,10 @@ namespace TranslatorLib
 
         static void DecodeVariableDeclaring()
         {
-            LexicalAnalyzer.DecodeLexem();
+            CheckLexem(Lexems.Type);
             string name = string.Copy(LexicalAnalyzer.CurrentName);
             CheckLexem(Lexems.Identifier);
-            
+            NameTable.AddIdentifier(name, Category.Variable);
         }
     }
 }
