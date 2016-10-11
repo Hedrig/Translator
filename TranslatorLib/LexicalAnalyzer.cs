@@ -46,6 +46,7 @@ namespace TranslatorLib
             Reader.ReadNextSymbol();
             switch (Reader.CurrentSymbol)
             {
+                case (','): { currentLexem = Lexems.DeclareSeparator; break; }
                 case ('\n'): { currentLexem = Lexems.Separator; break; }
                 case ('='):
                     {
