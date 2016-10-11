@@ -8,6 +8,14 @@ namespace TranslatorLib
 {
     static class SyntaxAnalyzer
     {
+
+        public static void Compile()
+        {
+            LexicalAnalyzer.Initialize();
+            DecodeVariableDeclaring();
+            CheckLexem(Lexems.Separator);
+        }
+
         static void CheckLexem(Lexems expectedLexem)
         {
             if (LexicalAnalyzer.CurrentLexem != expectedLexem)
@@ -20,9 +28,13 @@ namespace TranslatorLib
         static void DecodeVariableDeclaring()
         {
             CheckLexem(Lexems.Type);
-            string name = string.Copy(LexicalAnalyzer.CurrentName);
-            CheckLexem(Lexems.Identifier);
-            NameTable.AddIdentifier(name, Category.Variable);
+            do
+            {
+                string name = string.Copy(LexicalAnalyzer.CurrentName);
+                CheckLexem(Lexems.Identifier);
+                NameTable.AddIdentifier(name, Category.Variable);
+            }
+            while (LexicalAnalyzer.CurrentLexem == Lexems.DeclareSeparator);
         }
     }
 }
