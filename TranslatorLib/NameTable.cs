@@ -56,14 +56,14 @@ namespace TranslatorLib
                 identifiers.AddLast(id);
                 return id;
             }
-            throw new IdentifierAlreadyDefinedException();
+            throw new IdentifierAlreadyDefinedException("Идентификатор с именем '" + name + "' уже существует");
         }
 
         static public Identifier FindByName(string name)
         {
             foreach (Identifier id in identifiers)
                 if (id.Name.Equals(name)) return id;
-            throw new IdentifierNotDefinedException();
+            throw new IdentifierNotDefinedException("Обращение к несуществующему идентификатору '" + name + "'");
         }
     }
 }
