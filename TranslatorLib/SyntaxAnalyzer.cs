@@ -14,6 +14,12 @@ namespace TranslatorLib
             LexicalAnalyzer.Initialize();
             DecodeVariableDeclaring();
             CheckLexem(Lexems.Separator);
+            if (LexicalAnalyzer.CurrentLexem == Lexems.Begin)
+            {
+                LexicalAnalyzer.DecodeLexem();
+                DecodeInstructionSequence();
+            }
+            CheckLexem(Lexems.End);
         }
 
         static void CheckLexem(Lexems expectedLexem)
@@ -35,6 +41,45 @@ namespace TranslatorLib
                 NameTable.AddIdentifier(name, Category.Variable);
             }
             while (LexicalAnalyzer.CurrentLexem == Lexems.DeclareSeparator);
+        }
+
+        static void DecodeInstructionSequence()
+        {
+            DecodeInstruction();
+            while(LexicalAnalyzer.CurrentLexem == Lexems.Separator)
+            {
+                LexicalAnalyzer.DecodeLexem();
+                DecodeInstruction();
+            }
+        }
+
+        static void DecodeInstruction()
+        {
+            if (LexicalAnalyzer.CurrentLexem == Lexems.Identifier)
+            {
+                try
+                {
+                    Identifier id = NameTable.FindByName(LexicalAnalyzer.CurrentName);
+                }
+                catch (IdentifierNotDefinedException ex)
+                {
+                    throw new IdentifierNotDefinedException(
+                        ex.Message + ", строка " + Reader.RowIndex + ", символ " + Reader.ColumnIndex);
+                }
+                DecodeAssigningOperation();
+            }
+        }
+
+        static void DecodeAssigningOperation()
+        {
+            LexicalAnalyzer.DecodeLexem();
+            CheckLexem(Lexems.Assignment);
+            DecodeExpression();
+        }
+
+        private static void DecodeExpression()
+        {
+            throw new NotImplementedException();
         }
     }
 }
