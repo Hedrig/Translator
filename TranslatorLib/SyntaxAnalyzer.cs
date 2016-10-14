@@ -168,7 +168,7 @@ namespace TranslatorLib
                 return t;
             }
             else
-                throw new UnexpectedLexemError();
+                throw new UnexpectedLexemException();
         }
     }
 }
