@@ -77,9 +77,98 @@ namespace TranslatorLib
             DecodeExpression();
         }
 
-        private static void DecodeExpression()
+        private static Type DecodeExpression()
         {
-            throw new NotImplementedException();
+            return DecodeAdditionOrSubtraction();
+        }
+
+        static Type DecodeAdditionOrSubtraction()
+        {
+            Type t;
+            Lexems operation;
+            if (LexicalAnalyzer.CurrentLexem == Lexems.Addition ||
+                LexicalAnalyzer.CurrentLexem == Lexems.Subtraction)
+            {
+                operation = LexicalAnalyzer.CurrentLexem;
+                LexicalAnalyzer.DecodeLexem();
+                t = DecodeMultiplicationOrDivision();
+            }
+            else
+                t = DecodeMultiplicationOrDivision();
+            if (LexicalAnalyzer.CurrentLexem == Lexems.Addition ||
+                LexicalAnalyzer.CurrentLexem == Lexems.Subtraction)
+            {
+                do
+                {
+                    operation = LexicalAnalyzer.CurrentLexem;
+                    LexicalAnalyzer.DecodeLexem();
+                    t = DecodeMultiplicationOrDivision();
+                    switch (operation)
+                    {
+                        case Lexems.Addition:
+                            break;
+                        case Lexems.Subtraction:
+                            break;
+                    }
+                }
+                while (LexicalAnalyzer.CurrentLexem == Lexems.Addition ||
+                       LexicalAnalyzer.CurrentLexem == Lexems.Subtraction);
+            }
+            return t;
+        }
+
+        static Type DecodeMultiplicationOrDivision()
+        {
+            Lexems operation;
+            Type t = DecodeSubExpression();
+            if (LexicalAnalyzer.CurrentLexem == Lexems.Multiplication || 
+                LexicalAnalyzer.CurrentLexem == Lexems.Division)
+            {
+                do
+                {
+                    operation = LexicalAnalyzer.CurrentLexem;
+                    LexicalAnalyzer.DecodeLexem();
+                    t = DecodeSubExpression();
+                    switch (operation)
+                    {
+                        case Lexems.Multiplication:
+                            break;
+                        case Lexems.Division:
+                            break;
+                    }
+                }
+                while (LexicalAnalyzer.CurrentLexem == Lexems.Multiplication ||
+                LexicalAnalyzer.CurrentLexem == Lexems.Division);
+            }
+            return t;
+        }
+
+        static Type DecodeSubExpression()
+        {
+            Identifier id;
+            Type t = Type.None;
+            if (LexicalAnalyzer.CurrentLexem == Lexems.Identifier)
+            {
+                id = NameTable.FindByName(LexicalAnalyzer.CurrentName);
+                LexicalAnalyzer.DecodeLexem();
+                return id.Type;
+            }
+            else
+                if (LexicalAnalyzer.CurrentLexem == Lexems.Number)
+            {
+                LexicalAnalyzer.DecodeLexem();
+                return Type.Integer;
+            }
+            else
+                if (LexicalAnalyzer.CurrentLexem == Lexems.OpenBracket)
+            {
+                LexicalAnalyzer.DecodeLexem();
+                t = DecodeExpression();
+                CheckLexem(Lexems.CloseBracket);
+                return t;
+            }
+            else
+                throw new UnexpectedLexemError();
         }
     }
 }
