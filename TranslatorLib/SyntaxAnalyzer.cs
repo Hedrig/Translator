@@ -25,7 +25,7 @@ namespace TranslatorLib
         static void CheckLexem(Lexems expectedLexem)
         {
             if (LexicalAnalyzer.CurrentLexem != expectedLexem)
-                throw new UnexpectedLexemError("Ожидалась лексема " + expectedLexem + ", получена лексема " +
+                throw new UnexpectedLexemException("Ожидалась лексема " + expectedLexem + ", получена лексема " +
                     LexicalAnalyzer.CurrentLexem);
             else
                 LexicalAnalyzer.DecodeLexem();
