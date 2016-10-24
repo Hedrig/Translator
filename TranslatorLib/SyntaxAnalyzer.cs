@@ -16,7 +16,7 @@ namespace TranslatorLib
             CheckLexem(Lexems.Separator);
             if (LexicalAnalyzer.CurrentLexem == Lexems.Begin)
             {
-                LexicalAnalyzer.DecodeLexem();
+                LexicalAnalyzer.DecodeNextLexem();
                 DecodeInstructionSequence();
             }
             CheckLexem(Lexems.End);
@@ -28,7 +28,7 @@ namespace TranslatorLib
                 throw new UnexpectedLexemException("Ожидалась лексема " + expectedLexem + ", получена лексема " +
                     LexicalAnalyzer.CurrentLexem);
             else
-                LexicalAnalyzer.DecodeLexem();
+                LexicalAnalyzer.DecodeNextLexem();
         }
 
         static void DecodeVariableDeclaring()
@@ -48,7 +48,7 @@ namespace TranslatorLib
             DecodeInstruction();
             while(LexicalAnalyzer.CurrentLexem == Lexems.Separator)
             {
-                LexicalAnalyzer.DecodeLexem();
+                LexicalAnalyzer.DecodeNextLexem();
                 DecodeInstruction();
             }
         }
@@ -72,7 +72,7 @@ namespace TranslatorLib
 
         static void DecodeAssigningOperation()
         {
-            LexicalAnalyzer.DecodeLexem();
+            LexicalAnalyzer.DecodeNextLexem();
             CheckLexem(Lexems.Assignment);
             DecodeExpression();
         }
@@ -90,7 +90,7 @@ namespace TranslatorLib
                 LexicalAnalyzer.CurrentLexem == Lexems.Subtraction)
             {
                 operation = LexicalAnalyzer.CurrentLexem;
-                LexicalAnalyzer.DecodeLexem();
+                LexicalAnalyzer.DecodeNextLexem();
                 t = DecodeMultiplicationOrDivision();
             }
             else
@@ -101,7 +101,7 @@ namespace TranslatorLib
                 do
                 {
                     operation = LexicalAnalyzer.CurrentLexem;
-                    LexicalAnalyzer.DecodeLexem();
+                    LexicalAnalyzer.DecodeNextLexem();
                     t = DecodeMultiplicationOrDivision();
                     switch (operation)
                     {
@@ -127,7 +127,7 @@ namespace TranslatorLib
                 do
                 {
                     operation = LexicalAnalyzer.CurrentLexem;
-                    LexicalAnalyzer.DecodeLexem();
+                    LexicalAnalyzer.DecodeNextLexem();
                     t = DecodeSubExpression();
                     switch (operation)
                     {
@@ -149,7 +149,7 @@ namespace TranslatorLib
             Type t = Type.None;
             Lexems currentLexem = LexicalAnalyzer.CurrentLexem;
             string currentName = LexicalAnalyzer.CurrentName;
-            LexicalAnalyzer.DecodeLexem();
+            LexicalAnalyzer.DecodeNextLexem();
             switch (currentLexem)
             {
                 case (Lexems.Identifier):
