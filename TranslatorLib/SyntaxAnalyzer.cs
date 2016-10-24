@@ -147,28 +147,31 @@ namespace TranslatorLib
         {
             Identifier id;
             Type t = Type.None;
-            if (LexicalAnalyzer.CurrentLexem == Lexems.Identifier)
+            Lexems currentLexem = LexicalAnalyzer.CurrentLexem;
+            string currentName = LexicalAnalyzer.CurrentName;
+            LexicalAnalyzer.DecodeLexem();
+            switch (currentLexem)
             {
-                id = NameTable.FindByName(LexicalAnalyzer.CurrentName);
-                LexicalAnalyzer.DecodeLexem();
-                return id.Type;
+                case (Lexems.Identifier):
+                    {
+                        id = NameTable.FindByName(currentName);
+                        return id.Type;
+                    }
+                case (Lexems.Number):
+                    {
+                        return Type.Integer;
+                    }
+                case (Lexems.OpenBracket):
+                    {
+                        t = DecodeExpression();
+                        CheckLexem(Lexems.CloseBracket);
+                        return t;
+                    }
+                default:
+                    {
+                        throw new UnexpectedLexemException("Неожиданная лексема " + currentLexem.ToString());
+                    }
             }
-            else
-                if (LexicalAnalyzer.CurrentLexem == Lexems.Number)
-            {
-                LexicalAnalyzer.DecodeLexem();
-                return Type.Integer;
-            }
-            else
-                if (LexicalAnalyzer.CurrentLexem == Lexems.OpenBracket)
-            {
-                LexicalAnalyzer.DecodeLexem();
-                t = DecodeExpression();
-                CheckLexem(Lexems.CloseBracket);
-                return t;
-            }
-            else
-                throw new UnexpectedLexemException();
         }
     }
 }
