@@ -10,8 +10,11 @@ namespace TranslatorLib
     {
         static List<Keyword> keywords = new List<Keyword>();
         static Lexems currentLexem;
+        static string currentName;
 
-        public static Lexems CurrentLexem { get{ return currentLexem; } }
+        public static Lexems CurrentLexem { get { return currentLexem; } }
+
+        public static string CurrentName { get { return currentName; } }
 
         static void AddKeyword(string word, Lexems lexem)
         {
@@ -25,7 +28,7 @@ namespace TranslatorLib
             return Lexems.Name;
         }
 
-        static void DecodeLexem()
+        public static void DecodeNextLexem()
         {
             while (Reader.CurrentSymbol == ' ') Reader.ReadNextSymbol();
 
@@ -43,6 +46,7 @@ namespace TranslatorLib
             Reader.ReadNextSymbol();
             switch (Reader.CurrentSymbol)
             {
+                case (','): { currentLexem = Lexems.DeclareSeparator; break; }
                 case ('\n'): { currentLexem = Lexems.Separator; break; }
                 case ('='):
                     {
@@ -125,7 +129,8 @@ namespace TranslatorLib
                 Reader.ReadNextSymbol();
             }
             while (char.IsLetterOrDigit((char)Reader.CurrentSymbol));
-            currentLexem = GetKeyword(word.ToString());
+            currentName = word.ToString();
+            currentLexem = GetKeyword(currentName);
         }
         public static void Initialize()
         {
