@@ -8,10 +8,13 @@ namespace TranslatorLib
 {
     static class SyntaxAnalyzer
     {
+        static StringBuilder errorMessage;
+        static uint errorCounter;
 
         public static void Compile()
         {
             LexicalAnalyzer.Initialize();
+            errorMessage = new StringBuilder();
             DecodeVariableDeclaring();
             CheckLexem(Lexems.Separator);
             if (LexicalAnalyzer.CurrentLexem == Lexems.Begin)
@@ -20,15 +23,22 @@ namespace TranslatorLib
                 DecodeInstructionSequence();
             }
             CheckLexem(Lexems.End);
+            
         }
 
         static void CheckLexem(Lexems expectedLexem)
         {
             if (LexicalAnalyzer.CurrentLexem != expectedLexem)
-                throw new UnexpectedLexemException("Ожидалась лексема " + expectedLexem + ", получена лексема " +
+                Error("Ожидалась лексема " + expectedLexem + ", получена лексема " +
                     LexicalAnalyzer.CurrentLexem);
             else
                 LexicalAnalyzer.DecodeNextLexem();
+        }
+
+        private static void Error(string message)
+        {
+            errorMessage.AppendLine(message);
+            errorCounter++;
         }
 
         static void DecodeVariableDeclaring()
@@ -63,7 +73,7 @@ namespace TranslatorLib
                 }
                 catch (IdentifierNotDefinedException ex)
                 {
-                    throw new IdentifierNotDefinedException(
+                    Error(
                         ex.Message + ", строка " + Reader.RowIndex + ", символ " + Reader.ColumnIndex);
                 }
                 DecodeAssigningOperation();
@@ -84,17 +94,17 @@ namespace TranslatorLib
 
         static Type DecodeAdditionOrSubtraction()
         {
-            Type t;
+            Type leftExpressionType, rightExpressionType;
             Lexems operation;
             if (LexicalAnalyzer.CurrentLexem == Lexems.Addition ||
                 LexicalAnalyzer.CurrentLexem == Lexems.Subtraction)
             {
                 operation = LexicalAnalyzer.CurrentLexem;
                 LexicalAnalyzer.DecodeNextLexem();
-                t = DecodeMultiplicationOrDivision();
+                leftExpressionType = DecodeMultiplicationOrDivision();
             }
             else
-                t = DecodeMultiplicationOrDivision();
+                leftExpressionType = DecodeMultiplicationOrDivision();
             if (LexicalAnalyzer.CurrentLexem == Lexems.Addition ||
                 LexicalAnalyzer.CurrentLexem == Lexems.Subtraction)
             {
@@ -102,7 +112,9 @@ namespace TranslatorLib
                 {
                     operation = LexicalAnalyzer.CurrentLexem;
                     LexicalAnalyzer.DecodeNextLexem();
-                    t = DecodeMultiplicationOrDivision();
+                    rightExpressionType = DecodeMultiplicationOrDivision();
+                    if (leftExpressionType != rightExpressionType)
+                        Error("Несоответствие типов выражений, строка " + Reader.ColumnIndex + ", символ " + Reader.CurrentSymbol);
                     switch (operation)
                     {
                         case Lexems.Addition:
@@ -114,13 +126,13 @@ namespace TranslatorLib
                 while (LexicalAnalyzer.CurrentLexem == Lexems.Addition ||
                        LexicalAnalyzer.CurrentLexem == Lexems.Subtraction);
             }
-            return t;
+            return leftExpressionType;
         }
 
         static Type DecodeMultiplicationOrDivision()
         {
             Lexems operation;
-            Type t = DecodeSubExpression();
+            Type leftExpressionType = DecodeSubExpression(), rightExpressionType;
             if (LexicalAnalyzer.CurrentLexem == Lexems.Multiplication || 
                 LexicalAnalyzer.CurrentLexem == Lexems.Division)
             {
@@ -128,7 +140,9 @@ namespace TranslatorLib
                 {
                     operation = LexicalAnalyzer.CurrentLexem;
                     LexicalAnalyzer.DecodeNextLexem();
-                    t = DecodeSubExpression();
+                    rightExpressionType = DecodeSubExpression();
+                    if (leftExpressionType != rightExpressionType)
+                        Error("Несоответствие типов выражений, строка " + Reader.ColumnIndex + ", символ " + Reader.CurrentSymbol);
                     switch (operation)
                     {
                         case Lexems.Multiplication:
@@ -140,13 +154,13 @@ namespace TranslatorLib
                 while (LexicalAnalyzer.CurrentLexem == Lexems.Multiplication ||
                 LexicalAnalyzer.CurrentLexem == Lexems.Division);
             }
-            return t;
+            return leftExpressionType;
         }
 
         static Type DecodeSubExpression()
         {
             Identifier id;
-            Type t = Type.None;
+            Type expressionType = Type.None;
             Lexems currentLexem = LexicalAnalyzer.CurrentLexem;
             string currentName = LexicalAnalyzer.CurrentName;
             LexicalAnalyzer.DecodeNextLexem();
@@ -163,13 +177,14 @@ namespace TranslatorLib
                     }
                 case (Lexems.OpenBracket):
                     {
-                        t = DecodeExpression();
+                        expressionType = DecodeExpression();
                         CheckLexem(Lexems.CloseBracket);
-                        return t;
+                        return expressionType;
                     }
                 default:
                     {
-                        throw new UnexpectedLexemException("Неожиданная лексема " + currentLexem.ToString());
+                        Error("Неожиданная лексема " + currentLexem.ToString());
+                        return Type.None;
                     }
             }
         }
