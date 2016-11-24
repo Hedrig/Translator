@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGenerator.cs" />
     <Compile Include="IdentifierAlreadyDefinedException.cs" />
     <Compile Include="IdentifierNotDefinedException.cs" />
     <Compile Include="Keyword.cs" />
