@@ -47,6 +47,11 @@ namespace TranslatorLib
     {
         static LinkedList<Identifier> identifiers;
 
+        static List<Identifier> Identifiers
+        {
+            get { return new List<Identifier>(identifiers); }
+        }
+
         static public Identifier AddIdentifier(string name, Category category)
         {
             try { FindByName(name); }
