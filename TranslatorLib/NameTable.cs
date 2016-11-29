@@ -47,9 +47,9 @@ namespace TranslatorLib
     {
         static LinkedList<Identifier> identifiers;
 
-        static List<Identifier> Identifiers
+        static public LinkedList<Identifier> Identifiers
         {
-            get { return new List<Identifier>(identifiers); }
+            get { return new LinkedList<Identifier>(identifiers); }
         }
 
         static public Identifier AddIdentifier(string name, Category category)
