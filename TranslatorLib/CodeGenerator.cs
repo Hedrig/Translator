@@ -57,7 +57,12 @@ namespace TranslatorLib
 
         static void DeclareVariables()
         {
-            
+            LinkedListNode<Identifier> variable = NameTable.Identifiers.First;
+            do
+            {
+                AddInstruction(variable.Value.Name + " dw 1");
+            }
+            while ((variable = variable.Next) != null);
         }
     }
 }
