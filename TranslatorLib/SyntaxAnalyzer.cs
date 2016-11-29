@@ -13,9 +13,12 @@ namespace TranslatorLib
 
         public static void Compile()
         {
+            CodeGenerator.DeclareDataSegment();
             LexicalAnalyzer.Initialize();
             errorMessage = new StringBuilder();
             DecodeVariableDeclaring();
+            CodeGenerator.DeclareVariables();
+            CodeGenerator.DeclareStackAndCodeSegments();
             CheckLexem(Lexems.Separator);
             if (LexicalAnalyzer.CurrentLexem == Lexems.Begin)
             {
@@ -23,7 +26,12 @@ namespace TranslatorLib
                 DecodeInstructionSequence();
             }
             CheckLexem(Lexems.End);
-            
+            if (errorMessage.Length > 0)
+            {
+                // вывод сообщения об ошибке
+            }
+            CodeGenerator.DeclareMainProcedureEnding();
+            CodeGenerator.DeclareCodeEnding();
         }
 
         static void CheckLexem(Lexems expectedLexem)

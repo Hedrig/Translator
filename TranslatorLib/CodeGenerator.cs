@@ -22,12 +22,12 @@ namespace TranslatorLib
                 code.Add(line);
         }
 
-        static void DeclareDataSegment()
+        public static void DeclareDataSegment()
         {
             AddInstruction("data segment para public \"data\"");
         }
 
-        static void DeclareStackAndCodeSegments()
+        public static void DeclareStackAndCodeSegments()
         {
             AddSetOfInstructions("PRINT_BUF DB ' ' DUP(10)",
                                  "BUFEND    DB '$'",
@@ -42,20 +42,20 @@ namespace TranslatorLib
                                  "mov ds,ax");
         }
 
-        static void MainProcedureEnding()
+        public static void DeclareMainProcedureEnding()
         {
             AddSetOfInstructions("mov ax,4c00h",
                                  "int 21h",
                                  "main endp");
         }
 
-        static void CodeEnding()
+        public static void DeclareCodeEnding()
         {
             AddSetOfInstructions("code ends", 
                                  "end main");
         }
 
-        static void DeclareVariables()
+        public static void DeclareVariables()
         {
             LinkedListNode<Identifier> variable = NameTable.Identifiers.First;
             do
