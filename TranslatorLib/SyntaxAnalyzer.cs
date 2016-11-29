@@ -9,9 +9,25 @@ namespace TranslatorLib
     static class SyntaxAnalyzer
     {
         static StringBuilder errorMessage;
-        static uint errorCounter;
 
-        public static void Compile()
+        public static string ErrorMessages
+        {
+            get { return errorCounter.ToString(); }
+        }
+
+        static uint errorCounter;
+        internal static string CompiledCode
+        {
+            get
+            {
+                StringBuilder result = new StringBuilder();
+                foreach (string codeLine in CodeGenerator.Code)
+                    result.AppendLine(codeLine);
+                return result.ToString();
+            }
+        }
+
+        internal static void Compile()
         {
             CodeGenerator.DeclareDataSegment();
             LexicalAnalyzer.Initialize();
@@ -26,10 +42,6 @@ namespace TranslatorLib
                 DecodeInstructionSequence();
             }
             CheckLexem(Lexems.End);
-            if (errorMessage.Length > 0)
-            {
-                // вывод сообщения об ошибке
-            }
             CodeGenerator.DeclareMainProcedureEnding();
             CodeGenerator.DeclareCodeEnding();
         }

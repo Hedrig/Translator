@@ -9,7 +9,14 @@ namespace TranslatorLib
     static class CodeGenerator
     {
         private static List<string> code = new List<string>();
-        private static int codePointer = 0;
+
+        internal static List<string> Code
+        {
+            get
+            {
+                return new List<string>(code);
+            }
+        }
 
         static void AddInstruction(string instruction)
         {

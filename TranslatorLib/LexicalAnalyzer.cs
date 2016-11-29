@@ -132,6 +132,7 @@ namespace TranslatorLib
             currentName = word.ToString();
             currentLexem = GetKeyword(currentName);
         }
+
         public static void Initialize()
         {
             currentLexem = Lexems.None;
