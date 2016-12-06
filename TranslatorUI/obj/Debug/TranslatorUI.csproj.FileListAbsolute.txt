@@ -1,2 +1,11 @@
-D:\Learning\C#\Translator\TranslatorUI\bin\Debug\TranslatorUI.exe.config
 D:\Learning\C#\Translator\TranslatorUI\bin\Debug\Translator.exe.config
+D:\Learning\C#\Translator\TranslatorUI\bin\Debug\Translator.exe
+D:\Learning\C#\Translator\TranslatorUI\bin\Debug\Translator.pdb
+D:\Learning\C#\Translator\TranslatorUI\bin\Debug\TranslatorLib.dll
+D:\Learning\C#\Translator\TranslatorUI\bin\Debug\TranslatorLib.pdb
+D:\Learning\C#\Translator\TranslatorUI\obj\Debug\TranslatorUI.csprojResolveAssemblyReference.cache
+D:\Learning\C#\Translator\TranslatorUI\obj\Debug\TranslatorUI.MainForm.resources
+D:\Learning\C#\Translator\TranslatorUI\obj\Debug\TranslatorUI.Properties.Resources.resources
+D:\Learning\C#\Translator\TranslatorUI\obj\Debug\TranslatorUI.csproj.GenerateResource.Cache
+D:\Learning\C#\Translator\TranslatorUI\obj\Debug\Translator.exe
+D:\Learning\C#\Translator\TranslatorUI\obj\Debug\Translator.pdb
