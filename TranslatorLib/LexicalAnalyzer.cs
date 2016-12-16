@@ -102,8 +102,12 @@ namespace TranslatorLib
                         currentLexem = Lexems.CloseBracket; break;
                     }
                 default:
-                    throw new UnidentifiedSymbolException(
-                        "Символ не распознан, строка " + Reader.RowIndex + ", символ " + Reader.ColumnIndex);
+                    {
+                        Controller.Error(
+                        "Символ не распознан, строка " + Reader.RowIndex + 
+                        ", символ " + Reader.ColumnIndex);
+                        break;
+                    }
             }
         }
 

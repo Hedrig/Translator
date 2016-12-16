@@ -45,30 +45,37 @@ namespace TranslatorLib
 
     static class NameTable
     {
-        static LinkedList<Identifier> identifiers;
+        static List<Identifier> identifiers;
 
-        static public LinkedList<Identifier> Identifiers
+        static public List<Identifier> Identifiers
         {
-            get { return new LinkedList<Identifier>(identifiers); }
+            get { return new List<Identifier>(identifiers); }
         }
 
-        static public Identifier AddIdentifier(string name, Category category)
+        static public void AddIdentifier(string name, 
+                                         Category category, Type type)
         {
-            try { FindByName(name); }
-            catch (IdentifierNotDefinedException)
-            {
-                var id = new Identifier(name, category);
-                identifiers.AddLast(id);
-                return id;
-            }
-            throw new IdentifierAlreadyDefinedException("Идентификатор с именем '" + name + "' уже существует");
+            if (!identifiers.Exists(id => id.Name == name))
+                identifiers.Add(new Identifier(name, category, type));
+            else
+                Controller.Error(
+                    "Идентификатор с именем '" + name + "' уже существует");
         }
 
         static public Identifier FindByName(string name)
         {
-            foreach (Identifier id in identifiers)
-                if (id.Name.Equals(name)) return id;
-            throw new IdentifierNotDefinedException("Обращение к несуществующему идентификатору '" + name + "'");
+            Identifier identifier = identifiers.Find(id => id.Name == name);
+
+            if (identifier.Name == null)
+                Controller.Error(
+                    "Обращение к несуществующему идентификатору '" +
+                    name + "'");
+            return identifier;
+        }
+
+        private static void Error(string errorMessage)
+        {
+            Controller.Error(errorMessage);
         }
     }
 }

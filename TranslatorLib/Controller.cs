@@ -21,10 +21,24 @@ namespace TranslatorLib
             Reader.Initialize(fileName);
             LexicalAnalyzer.Initialize();
             SyntaxAnalyzer.Compile();
-            if (SyntaxAnalyzer.ErrorMessages.Length > 0)
-                ErrorsOccurred(null, new ErrorOccurredEventArgs(SyntaxAnalyzer.ErrorMessages));
+            if (errors.Length > 0)
+                ErrorsOccurred(null, new ErrorOccurredEventArgs(errors.ToString()));
             else
                 code = SyntaxAnalyzer.CompiledCode;
+        }
+
+        static StringBuilder errors = new StringBuilder();
+        static int errorCount = 0;
+
+        internal static void Error(string errorMessage)
+        {
+            errors.AppendLine(errorMessage);
+            errorCount++;
+        }
+
+        public static string Errors
+        {
+            get { return errors.ToString(); }
         }
     }
 }
