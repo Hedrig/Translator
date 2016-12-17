@@ -25,7 +25,17 @@ namespace TranslatorLib
         {
             foreach (Keyword keyword in keywords)
                 if (keyword.word.Equals(word)) return keyword.lexem;
-            return Lexems.Name;
+            // Попытка найти тип с данным именем в списке типов, 
+            // в случае неудачи лексема считается переменной
+            try
+            {
+                Enum.Parse(typeof(Type), word);
+                return Lexems.Type;
+            }
+            catch (ArgumentException)
+            {
+                return Lexems.Name;
+            }
         }
 
         public static void DecodeNextLexem()
@@ -141,6 +151,8 @@ namespace TranslatorLib
         {
             currentLexem = Lexems.None;
             keywords = new List<Keyword>();
+            AddKeyword("begin", Lexems.Begin);
+            AddKeyword("end", Lexems.End);
         }
     }
 }
