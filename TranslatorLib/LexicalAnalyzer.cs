@@ -34,7 +34,7 @@ namespace TranslatorLib
             }
             catch (ArgumentException)
             {
-                return Lexems.Name;
+                return Lexems.Identifier;
             }
         }
 
@@ -54,7 +54,7 @@ namespace TranslatorLib
         static void DecodeSymbol(int symbol)
         {
             Reader.ReadNextSymbol();
-            switch (Reader.CurrentSymbol)
+            switch (symbol)
             {
                 case (','): { currentLexem = Lexems.DeclareSeparator; break; }
                 case ('\n'): { currentLexem = Lexems.Separator; break; }
@@ -87,30 +87,13 @@ namespace TranslatorLib
                         else currentLexem = Lexems.Less;
                         break;
                     }
-                case ('+'):
-                    {
-                        currentLexem = Lexems.Addition; break;
-                    }
-                case ('-'):
-                    {
-                        currentLexem = Lexems.Subtraction; break;
-                    }
-                case ('*'):
-                    {
-                        currentLexem = Lexems.Multiplication; break;
-                    }
-                case ('/'):
-                    {
-                        currentLexem = Lexems.Division; break;
-                    }
-                case ('('):
-                    {
-                        currentLexem = Lexems.OpenBracket; break;
-                    }
-                case (')'):
-                    {
-                        currentLexem = Lexems.CloseBracket; break;
-                    }
+                case ('+'): currentLexem = Lexems.Addition;       break;
+                case ('-'): currentLexem = Lexems.Subtraction;    break;
+                case ('*'): currentLexem = Lexems.Multiplication; break;
+                case ('/'): currentLexem = Lexems.Division;       break;
+                case ('('): currentLexem = Lexems.OpenBracket;    break;
+                case (')'): currentLexem = Lexems.CloseBracket;   break;
+                case (-1):  currentLexem = Lexems.EOF;            break;
                 default:
                     {
                         Controller.Error(
@@ -151,8 +134,9 @@ namespace TranslatorLib
         {
             currentLexem = Lexems.None;
             keywords = new List<Keyword>();
-            AddKeyword("begin", Lexems.Begin);
-            AddKeyword("end", Lexems.End);
+            AddKeyword("Begin", Lexems.Begin);
+            AddKeyword("End", Lexems.End);
+            DecodeNextLexem();
         }
     }
 }

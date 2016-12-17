@@ -8,7 +8,7 @@ namespace TranslatorLib
 {
     public enum Lexems
     {
-        None, Name, Number, Identifier, Type,
+        None, Number, Identifier, Type,
         Addition, Subtraction, Multiplication, Division, Assignment,
         OpenBracket, CloseBracket, Separator,
         Equal, More, Less, MoreOrEqual, LessOrEqual, NotEqual,

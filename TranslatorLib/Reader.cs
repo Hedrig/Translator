@@ -44,6 +44,7 @@ namespace TranslatorLib
             streamReader = new StreamReader(filename);
             rowIndex = 1;
             columnIndex = 1;
+            currentSymbol = streamReader.Read();
         }
         public static void ReadNextSymbol()
         {

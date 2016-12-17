@@ -23,7 +23,6 @@ namespace TranslatorLib
         internal static void Compile()
         {
             CodeGenerator.DeclareDataSegment();
-            LexicalAnalyzer.Initialize();
             DecodeVariableDeclaring();
             CodeGenerator.DeclareVariables();
             CodeGenerator.DeclareStackAndCodeSegments();
@@ -54,7 +53,15 @@ namespace TranslatorLib
         static void DecodeVariableDeclaring()
         {
             CheckLexem(Lexems.Type);
-            Type type = (Type)Enum.Parse(typeof(Type), LexicalAnalyzer.CurrentName);
+            Type type;
+            try
+            {
+                type = (Type)Enum.Parse(typeof(Type), LexicalAnalyzer.CurrentName);
+            }
+            catch (ArgumentException)
+            {
+                type = Type.None;
+            }
             LexicalAnalyzer.DecodeNextLexem();
             do
             {
