@@ -35,7 +35,7 @@ namespace TranslatorUI
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Assembler Code File| *.asm";
+            openFileDialog.Filter = "Source Code File| *.src";
             openFileDialog.ShowDialog(this);
             if (openFileDialog.FileName != "")
             {
@@ -56,7 +56,7 @@ namespace TranslatorUI
         private void cохранитьКакToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Assembler Code File| *.asm";
+            saveFileDialog.Filter = "Source Code File| *.src";
             saveFileDialog.ShowDialog(this);
             if (saveFileDialog.FileName != "")
             {

@@ -43,6 +43,7 @@
     <Compile Include="CodeGenerator.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="ErrorOccurredEventArgs.cs" />
+    <Compile Include="Identifier.cs" />
     <Compile Include="Keyword.cs" />
     <Compile Include="Lexems.cs" />
     <Compile Include="LexicalAnalyzer.cs" />

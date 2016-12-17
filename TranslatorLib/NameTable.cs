@@ -16,36 +16,9 @@ namespace TranslatorLib
         None, Integer, Bool
     }
 
-    struct Identifier
-    {
-        string name;
-        Category category;
-        Type type;
-
-        public Identifier(string name, Category category)
-        {
-            this.name = name;
-            this.category = category;
-            type = Type.None;
-        }
-
-        public Identifier(string name, Category category, Type type)
-        {
-            this.name = name;
-            this.type = type;
-            this.category = category;
-        }
-
-        public string Name { get { return name; } }
-
-        internal Category Category { get { return category; } }
-
-        internal Type Type { get { return type; } }
-    }
-
     static class NameTable
     {
-        static List<Identifier> identifiers;
+        static List<Identifier> identifiers = new List<Identifier>();
 
         static public List<Identifier> Identifiers
         {
