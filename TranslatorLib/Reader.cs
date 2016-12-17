@@ -40,7 +40,7 @@ namespace TranslatorLib
 
         public static void Initialize(string filename)
         {
-            streamReader.Close();
+            if (streamReader != null) streamReader.Close();
             streamReader = new StreamReader(filename);
             rowIndex = 1;
             columnIndex = 1;

@@ -28,8 +28,15 @@ namespace TranslatorUI
 
         private void выполнитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TranslatorLib.Controller.Compile(currentFile);
-            resultRichTextBox.Text = TranslatorLib.Controller.Code;
+            if (currentFile != null)
+            {
+                TranslatorLib.Controller.Compile(currentFile);
+                resultRichTextBox.Text = TranslatorLib.Controller.Code;
+            }
+            else
+            {
+                сохранитьКакToolStripMenuItem_Click(sender, e);
+            }
         }
 
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -50,10 +57,10 @@ namespace TranslatorUI
             if (currentFile.Length > 0)
                 File.WriteAllText(currentFile, sourceRichTextBox.Text, Encoding.Default);
             else
-                cохранитьКакToolStripMenuItem_Click(sender, e);
+                сохранитьКакToolStripMenuItem_Click(sender, e);
         }
 
-        private void cохранитьКакToolStripMenuItem_Click(object sender, EventArgs e)
+        private void сохранитьКакToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Source Code File| *.src";
