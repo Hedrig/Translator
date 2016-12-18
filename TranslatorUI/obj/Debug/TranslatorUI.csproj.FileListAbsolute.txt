@@ -9,3 +9,5 @@ D:\Learning\C#\Translator\TranslatorUI\obj\Debug\TranslatorUI.Properties.Resourc
 D:\Learning\C#\Translator\TranslatorUI\obj\Debug\TranslatorUI.csproj.GenerateResource.Cache
 D:\Learning\C#\Translator\TranslatorUI\obj\Debug\Translator.exe
 D:\Learning\C#\Translator\TranslatorUI\obj\Debug\Translator.pdb
+D:\Learning\C#\Translator\TranslatorUI\bin\Debug\CodeBuilder.dll
+D:\Learning\C#\Translator\TranslatorUI\bin\Debug\CodeBuilder.pdb

@@ -16,26 +16,27 @@ namespace TranslatorUI
         public MainForm()
         {
             InitializeComponent();
-            TranslatorLib.Controller.ErrorsOccurred += Controller_ErrorsOccurred;
+            TranslatorLib.Controller.CodeCompiled += Controller_CodeCompiled;
         }
 
-        private void Controller_ErrorsOccurred(object sender, TranslatorLib.ErrorOccurredEventArgs e)
+        private void Controller_CodeCompiled(object sender, EventArgs e)
         {
-            compileRichTextBox.Text += e.Messages;
+            resultRichTextBox.Text = TranslatorLib.Controller.Code;
+            compileRichTextBox.Text = TranslatorLib.Controller.Output;
         }
 
         string currentFile;
 
         private void выполнитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Несохранённый код нельзя компилировать
             if (currentFile != null)
-            {
                 TranslatorLib.Controller.Compile(currentFile);
-                resultRichTextBox.Text = TranslatorLib.Controller.Code;
-            }
             else
             {
                 сохранитьКакToolStripMenuItem_Click(sender, e);
+                if (currentFile != null)
+                    TranslatorLib.Controller.Compile(currentFile);
             }
         }
 
@@ -54,9 +55,11 @@ namespace TranslatorUI
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (currentFile.Length > 0)
+            // Сохраняем код в текущий файл
+            if (currentFile != null)
                 File.WriteAllText(currentFile, sourceRichTextBox.Text, Encoding.Default);
             else
+                // Если код новый, запускаем форму сохранения
                 сохранитьКакToolStripMenuItem_Click(sender, e);
         }
 

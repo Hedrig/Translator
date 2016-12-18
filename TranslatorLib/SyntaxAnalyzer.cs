@@ -34,7 +34,6 @@ namespace TranslatorLib
             }
             CheckLexemAndProceed(Lexems.End);
             CodeGenerator.DeclareMainProcedureEnding();
-            CodeGenerator.DeclareCodeEnding();
         }
 
         static void CheckLexem(Lexems expectedLexem)

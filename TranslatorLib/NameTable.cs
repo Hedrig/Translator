@@ -25,6 +25,11 @@ namespace TranslatorLib
             get { return new List<Identifier>(identifiers); }
         }
 
+        public static void Initialize()
+        {
+            identifiers = new List<Identifier>();
+        }
+
         static public void AddIdentifier(string name, 
                                          Category category, Type type)
         {
@@ -44,11 +49,6 @@ namespace TranslatorLib
                     "Обращение к несуществующему идентификатору '" +
                     name + "'");
             return identifier;
-        }
-
-        private static void Error(string errorMessage)
-        {
-            Controller.Error(errorMessage);
         }
     }
 }

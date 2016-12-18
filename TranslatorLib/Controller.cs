@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,39 +7,56 @@ using System.Threading.Tasks;
 
 namespace TranslatorLib
 {
+    /// <summary>
+    /// Класс, связывающий форму
+    /// </summary>
     public static class Controller
     {
         static string code = "";
+
+        static StringBuilder output = new StringBuilder();
+        static int errorCount = 0;
+
+        public static event EventHandler CodeCompiled;
+
         public static string Code
         {
             get { return code; }
         }
 
-        public static event EventHandler<ErrorOccurredEventArgs> ErrorsOccurred;
-
         public static void Compile(string fileName)
         {
+            errorCount = 0;
+            output = new StringBuilder();
             Reader.Initialize(fileName);
             LexicalAnalyzer.Initialize();
+            NameTable.Initialize();
             SyntaxAnalyzer.Compile();
-            if (errors.Length > 0)
-                ErrorsOccurred(null, new ErrorOccurredEventArgs(errors.ToString()));
-            else
+            // Компиляция завершена успешно, если ошибок нет
+            if (errorCount == 0)
+            {
                 code = SyntaxAnalyzer.CompiledCode;
+                Build(fileName);
+            }
+            CodeCompiled(null, EventArgs.Empty);
         }
 
-        static StringBuilder errors = new StringBuilder();
-        static int errorCount = 0;
+        private static void Build(string fileName)
+        {
+            CodeBuilder.Builder.BuildAll(fileName, code);
+            output.AppendLine(CodeBuilder.Builder.Output);
+        }
+
 
         internal static void Error(string errorMessage)
         {
-            errors.AppendLine(errorMessage);
+            output.AppendLine(errorMessage);
             errorCount++;
         }
 
-        public static string Errors
+        public static string Output
         {
-            get { return errors.ToString(); }
+            get { return output.ToString(); }
         }
     }
 }

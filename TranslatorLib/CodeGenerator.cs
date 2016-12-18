@@ -31,35 +31,22 @@ namespace TranslatorLib
 
         public static void DeclareDataSegment()
         {
-            AddInstruction("data segment para public \"data\"");
+            AddSetOfInstructions(".386",
+                                 ".model flat, stdcall",
+                                 "option casemap :none",
+                                 ".data");
         }
 
         public static void DeclareStackAndCodeSegments()
         {
-            AddSetOfInstructions("PRINT_BUF DB ' ' DUP(10)",
-                                 "BUFEND    DB '$'",
-                                 "data ends",
-                                 "stk segment stack",
-                                 "db 256 dup (\"?\")",
-                                 "stk ends",
-                                 "code segment para public \"code\"",
-                                 "main proc",
-                                 "assume cs:code,ds:data,ss:stk",
-                                 "mov ax,data",
-                                 "mov ds,ax");
+            AddSetOfInstructions(".code",
+                                 "start:");
         }
 
         public static void DeclareMainProcedureEnding()
         {
-            AddSetOfInstructions("mov ax,4c00h",
-                                 "int 21h",
-                                 "main endp");
-        }
-
-        public static void DeclareCodeEnding()
-        {
-            AddSetOfInstructions("code ends", 
-                                 "end main");
+            AddSetOfInstructions("ret",
+                                 "end start");
         }
 
         public static void DeclareVariables()

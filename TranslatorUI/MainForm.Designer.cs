@@ -86,6 +86,7 @@
             // 
             // resultRichTextBox
             // 
+            this.resultRichTextBox.Enabled = false;
             this.resultRichTextBox.Location = new System.Drawing.Point(6, 20);
             this.resultRichTextBox.Name = "resultRichTextBox";
             this.resultRichTextBox.Size = new System.Drawing.Size(362, 402);

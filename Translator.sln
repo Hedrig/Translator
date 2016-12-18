@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslatorUI", "TranslatorU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslatorLib", "TranslatorLib\TranslatorLib.csproj", "{2E87049A-2A23-472A-917B-EA30223F31CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslatorTest", "TranslatorTest\TranslatorTest.csproj", "{5BF0EC44-DD6F-4B77-9740-95B9F6E23885}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBuilder", "CodeBuilder\CodeBuilder.csproj", "{562D7374-EB4B-4395-9F5F-513DD726360A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{2E87049A-2A23-472A-917B-EA30223F31CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E87049A-2A23-472A-917B-EA30223F31CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E87049A-2A23-472A-917B-EA30223F31CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5BF0EC44-DD6F-4B77-9740-95B9F6E23885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BF0EC44-DD6F-4B77-9740-95B9F6E23885}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BF0EC44-DD6F-4B77-9740-95B9F6E23885}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BF0EC44-DD6F-4B77-9740-95B9F6E23885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{562D7374-EB4B-4395-9F5F-513DD726360A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{562D7374-EB4B-4395-9F5F-513DD726360A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{562D7374-EB4B-4395-9F5F-513DD726360A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{562D7374-EB4B-4395-9F5F-513DD726360A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
