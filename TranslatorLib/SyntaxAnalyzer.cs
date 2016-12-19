@@ -9,6 +9,13 @@ namespace TranslatorLib
     static class SyntaxAnalyzer
     {
 
+        const string TYPE_MISMATCH_MESSAGE = 
+            "Несовпадение типов выражений, строка {0}";
+        const string WRONG_LEXEM_MESSAGE = 
+            "Ожидалась лексема {0}, получена лексема {1}, (строка {2})";
+        const string UNEXPECTED_LEXEM_MESSAGE =
+            "Неожиданная лексема {0}, (строка {1})";
+
         internal static string CompiledCode
         {
             get
@@ -40,8 +47,8 @@ namespace TranslatorLib
         static void CheckLexem(Lexems expectedLexem)
         {
             if (LexicalAnalyzer.CurrentLexem != expectedLexem)
-                Controller.Error("Ожидалась лексема " + expectedLexem + ", получена лексема " +
-                    LexicalAnalyzer.CurrentLexem + " (строка " + Reader.RowIndex + ")");
+                Controller.Error(string.Format(WRONG_LEXEM_MESSAGE, 
+                    expectedLexem, LexicalAnalyzer.CurrentLexem, Reader.RowIndex));
         }
 
         static void CheckLexemAndProceed(Lexems expectedLexem)
@@ -84,15 +91,21 @@ namespace TranslatorLib
 
         static void DecodeInstruction()
         {
-            if (LexicalAnalyzer.CurrentLexem == Lexems.Identifier)
+            switch (LexicalAnalyzer.CurrentLexem)
             {
-                Identifier id = NameTable.FindByName(
+                case (Lexems.Identifier):
+                    Identifier id = NameTable.FindByName(
                     LexicalAnalyzer.CurrentName);
-                if (id.Name != null)
-                {
-                    DecodeAssigningOperation();
-                    CodeGenerator.AssignFromStack(id.Name);
-                }
+                    if (id.Name != null)
+                    {
+                        DecodeAssigningOperation();
+                        CodeGenerator.AssignFromStack(id.Name);
+                    }
+                    break;
+                default: Controller.Error(
+                    string.Format(UNEXPECTED_LEXEM_MESSAGE,
+                    LexicalAnalyzer.CurrentLexem, Reader.RowIndex));
+                    break;    
             }
         }
 
@@ -130,9 +143,8 @@ namespace TranslatorLib
                     LexicalAnalyzer.DecodeNextLexem();
                     rightExpressionType = DecodeMultiplicationOrDivision();
                     if (leftExpressionType != rightExpressionType)
-                        Controller.Error("Несоответствие типов выражений," +
-                            "строка " + Reader.ColumnIndex + 
-                            ", символ " + Reader.CurrentSymbol);
+                        Controller.Error(string.Format(
+                            TYPE_MISMATCH_MESSAGE, Reader.RowIndex));
                     switch (operation)
                     {
                         case Lexems.Addition:
@@ -152,7 +164,8 @@ namespace TranslatorLib
         static Type DecodeMultiplicationOrDivision()
         {
             Lexems operation;
-            Type leftExpressionType = DecodeSubExpression(), rightExpressionType;
+            Type leftExpressionType = DecodeSubExpression(), 
+                rightExpressionType;
             if (LexicalAnalyzer.CurrentLexem == Lexems.Multiplication || 
                 LexicalAnalyzer.CurrentLexem == Lexems.Division)
             {
@@ -162,9 +175,8 @@ namespace TranslatorLib
                     LexicalAnalyzer.DecodeNextLexem();
                     rightExpressionType = DecodeSubExpression();
                     if (leftExpressionType != rightExpressionType)
-                        Controller.Error("Несоответствие типов выражений," +
-                            "строка " + Reader.ColumnIndex +
-                            ", символ " + Reader.CurrentSymbol);
+                        Controller.Error(string.Format(
+                            TYPE_MISMATCH_MESSAGE, Reader.RowIndex));
                     switch (operation)
                     {
                         case Lexems.Multiplication:
@@ -191,27 +203,20 @@ namespace TranslatorLib
             switch (currentLexem)
             {
                 case (Lexems.Identifier):
-                    {
-                        id = NameTable.FindByName(currentName);
-                        CodeGenerator.PushValue(id.Name);
-                        return id.Type;
-                    }
+                    id = NameTable.FindByName(currentName);
+                    CodeGenerator.PushValue(id.Name);
+                    return id.Type;
                 case (Lexems.Number):
-                    {
-                        CodeGenerator.PushValue(currentName);
-                        return Type.Integer;
-                    }
+                    CodeGenerator.PushValue(currentName);
+                    return Type.Integer;
                 case (Lexems.OpenBracket):
-                    {
-                        expressionType = DecodeExpression();
-                        CheckLexemAndProceed(Lexems.CloseBracket);
-                        return expressionType;
-                    }
+                    expressionType = DecodeExpression();
+                    CheckLexemAndProceed(Lexems.CloseBracket);
+                    return expressionType;
                 default:
-                    {
-                        Controller.Error("Неожиданная лексема " + currentLexem.ToString());
-                        return Type.None;
-                    }
+                    Controller.Error(string.Format(UNEXPECTED_LEXEM_MESSAGE,
+                        LexicalAnalyzer.CurrentLexem, Reader.RowIndex));
+                    return Type.None;
             }
         }
 
