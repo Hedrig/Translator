@@ -45,9 +45,10 @@ namespace TranslatorLib
             Identifier identifier = identifiers.Find(id => id.Name == name);
 
             if (identifier.Name == null)
-                Controller.Error(
-                    "Обращение к несуществующему идентификатору '" +
-                    name + "'");
+                if (name != null)
+                    Controller.Error(
+                        "Обращение к несуществующему идентификатору '" +
+                        name + "'");
             return identifier;
         }
     }

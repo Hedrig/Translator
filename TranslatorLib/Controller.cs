@@ -28,9 +28,11 @@ namespace TranslatorLib
         {
             errorCount = 0;
             output = new StringBuilder();
+            code = "";
             Reader.Initialize(fileName);
             LexicalAnalyzer.Initialize();
             NameTable.Initialize();
+            CodeGenerator.Initialize();
             SyntaxAnalyzer.Compile();
             // Компиляция завершена успешно, если ошибок нет
             if (errorCount == 0)
@@ -38,6 +40,7 @@ namespace TranslatorLib
                 code = SyntaxAnalyzer.CompiledCode;
                 Build(fileName);
             }
+            Reader.Close();
             CodeCompiled(null, EventArgs.Empty);
         }
 

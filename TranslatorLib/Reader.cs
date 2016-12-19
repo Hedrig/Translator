@@ -48,7 +48,6 @@ namespace TranslatorLib
         }
         public static void ReadNextSymbol()
         {
-            currentSymbol = streamReader.Read();
             switch (currentSymbol)
             {
                 case ('\0'):
@@ -72,6 +71,7 @@ namespace TranslatorLib
                         columnIndex++; break;
                     }
             }
+            currentSymbol = streamReader.Read();
         }
         public static void Close()
         {

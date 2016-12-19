@@ -53,7 +53,7 @@ namespace CodeBuilder
                     Path.GetDirectoryName(fileName), "Compiled",
                     exeFileName);
             if (File.Exists(exeFilePath)) File.Delete(exeFilePath);
-            File.Move(exeFileName, exeFilePath);
+            if (File.Exists(exeFileName)) File.Move(exeFileName, exeFilePath);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace CodeBuilder
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "link.exe",
-                    Arguments = "/SUBSYSTEM:WINDOWS /OPT:NOREF " + filename,
+                    Arguments = "/SUBSYSTEM:CONSOLE /OPT:NOREF /defaultlib:kernel32.lib " + filename,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true

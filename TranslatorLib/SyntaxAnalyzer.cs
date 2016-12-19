@@ -33,6 +33,7 @@ namespace TranslatorLib
                 DecodeInstructionSequence();
             }
             CheckLexemAndProceed(Lexems.End);
+            DecodePrintOperation();
             CodeGenerator.DeclareMainProcedureEnding();
         }
 
@@ -40,7 +41,7 @@ namespace TranslatorLib
         {
             if (LexicalAnalyzer.CurrentLexem != expectedLexem)
                 Controller.Error("Ожидалась лексема " + expectedLexem + ", получена лексема " +
-                    LexicalAnalyzer.CurrentLexem);
+                    LexicalAnalyzer.CurrentLexem + " (строка " + Reader.RowIndex + ")");
         }
 
         static void CheckLexemAndProceed(Lexems expectedLexem)
@@ -61,9 +62,9 @@ namespace TranslatorLib
             {
                 type = Type.None;
             }
-            LexicalAnalyzer.DecodeNextLexem();
             do
             {
+                LexicalAnalyzer.DecodeNextLexem();
                 string name = string.Copy(LexicalAnalyzer.CurrentName);
                 CheckLexemAndProceed(Lexems.Identifier);
                 NameTable.AddIdentifier(name, Category.Variable, type);
@@ -85,9 +86,13 @@ namespace TranslatorLib
         {
             if (LexicalAnalyzer.CurrentLexem == Lexems.Identifier)
             {
-                Identifier id = NameTable.FindByName(LexicalAnalyzer.CurrentName);
+                Identifier id = NameTable.FindByName(
+                    LexicalAnalyzer.CurrentName);
                 if (id.Name != null)
+                {
                     DecodeAssigningOperation();
+                    CodeGenerator.AssignFromStack(id.Name);
+                }
             }
         }
 
@@ -125,12 +130,16 @@ namespace TranslatorLib
                     LexicalAnalyzer.DecodeNextLexem();
                     rightExpressionType = DecodeMultiplicationOrDivision();
                     if (leftExpressionType != rightExpressionType)
-                        Controller.Error("Несоответствие типов выражений, строка " + Reader.ColumnIndex + ", символ " + Reader.CurrentSymbol);
+                        Controller.Error("Несоответствие типов выражений," +
+                            "строка " + Reader.ColumnIndex + 
+                            ", символ " + Reader.CurrentSymbol);
                     switch (operation)
                     {
                         case Lexems.Addition:
+                            CodeGenerator.AddTwoStackValues();
                             break;
                         case Lexems.Subtraction:
+                            CodeGenerator.SubTwoStackValues();
                             break;
                     }
                 }
@@ -153,12 +162,16 @@ namespace TranslatorLib
                     LexicalAnalyzer.DecodeNextLexem();
                     rightExpressionType = DecodeSubExpression();
                     if (leftExpressionType != rightExpressionType)
-                        Controller.Error("Несоответствие типов выражений, строка " + Reader.ColumnIndex + ", символ " + Reader.CurrentSymbol);
+                        Controller.Error("Несоответствие типов выражений," +
+                            "строка " + Reader.ColumnIndex +
+                            ", символ " + Reader.CurrentSymbol);
                     switch (operation)
                     {
                         case Lexems.Multiplication:
+                            CodeGenerator.MultiplyTwoStackValues();
                             break;
                         case Lexems.Division:
+                            CodeGenerator.DivideSecondStackValueByFirst();
                             break;
                     }
                 }
@@ -180,10 +193,12 @@ namespace TranslatorLib
                 case (Lexems.Identifier):
                     {
                         id = NameTable.FindByName(currentName);
+                        CodeGenerator.PushValue(id.Name);
                         return id.Type;
                     }
                 case (Lexems.Number):
                     {
+                        CodeGenerator.PushValue(currentName);
                         return Type.Integer;
                     }
                 case (Lexems.OpenBracket):
@@ -198,6 +213,16 @@ namespace TranslatorLib
                         return Type.None;
                     }
             }
+        }
+
+        static void DecodePrintOperation()
+        {
+            LexicalAnalyzer.DecodeNextLexem();
+            CheckLexemAndProceed(Lexems.Print);
+            CheckLexem(Lexems.Identifier);
+            Identifier id = NameTable.FindByName(LexicalAnalyzer.CurrentName);
+            if (id.Name != null)
+                CodeGenerator.DeclarePrintOperation(id.Name);
         }
     }
 }

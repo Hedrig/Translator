@@ -36,6 +36,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.новыйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьКакToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +53,7 @@
             // 
             this.sourceRichTextBox.Location = new System.Drawing.Point(6, 20);
             this.sourceRichTextBox.Name = "sourceRichTextBox";
-            this.sourceRichTextBox.Size = new System.Drawing.Size(362, 402);
+            this.sourceRichTextBox.Size = new System.Drawing.Size(362, 368);
             this.sourceRichTextBox.TabIndex = 1;
             this.sourceRichTextBox.Text = "";
             // 
@@ -60,6 +61,7 @@
             // 
             this.compileRichTextBox.Location = new System.Drawing.Point(6, 25);
             this.compileRichTextBox.Name = "compileRichTextBox";
+            this.compileRichTextBox.ReadOnly = true;
             this.compileRichTextBox.Size = new System.Drawing.Size(765, 222);
             this.compileRichTextBox.TabIndex = 2;
             this.compileRichTextBox.Text = "";
@@ -86,10 +88,10 @@
             // 
             // resultRichTextBox
             // 
-            this.resultRichTextBox.Enabled = false;
             this.resultRichTextBox.Location = new System.Drawing.Point(6, 20);
             this.resultRichTextBox.Name = "resultRichTextBox";
-            this.resultRichTextBox.Size = new System.Drawing.Size(362, 402);
+            this.resultRichTextBox.ReadOnly = true;
+            this.resultRichTextBox.Size = new System.Drawing.Size(362, 368);
             this.resultRichTextBox.TabIndex = 1;
             this.resultRichTextBox.Text = "";
             // 
@@ -118,6 +120,7 @@
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.новыйToolStripMenuItem,
             this.открытьToolStripMenuItem,
             this.сохранитьToolStripMenuItem,
             this.сохранитьКакToolStripMenuItem,
@@ -125,6 +128,13 @@
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
             this.файлToolStripMenuItem.Text = "Файл";
+            // 
+            // новыйToolStripMenuItem
+            // 
+            this.новыйToolStripMenuItem.Name = "новыйToolStripMenuItem";
+            this.новыйToolStripMenuItem.Size = new System.Drawing.Size(193, 26);
+            this.новыйToolStripMenuItem.Text = "Новый";
+            this.новыйToolStripMenuItem.Click += new System.EventHandler(this.новыйToolStripMenuItem_Click);
             // 
             // открытьToolStripMenuItem
             // 
@@ -208,6 +218,7 @@
         private System.Windows.Forms.ToolStripMenuItem выполнитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьКакToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выйтиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem новыйToolStripMenuItem;
     }
 }
 

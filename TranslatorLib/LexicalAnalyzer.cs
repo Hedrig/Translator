@@ -40,6 +40,8 @@ namespace TranslatorLib
 
         public static void DecodeNextLexem()
         {
+            currentLexem = Lexems.None;
+            currentName = null;
             while (Reader.CurrentSymbol == ' ') Reader.ReadNextSymbol();
 
             if (char.IsLetter((char)Reader.CurrentSymbol)) DecodeIdentifier();
@@ -114,7 +116,7 @@ namespace TranslatorLib
             }
             while (char.IsDigit((char)Reader.CurrentSymbol));
             currentLexem = Lexems.Number;
-            number.ToString();
+            currentName = number.ToString();
         }
 
         private static void DecodeIdentifier()
@@ -136,6 +138,7 @@ namespace TranslatorLib
             keywords = new List<Keyword>();
             AddKeyword("Begin", Lexems.Begin);
             AddKeyword("End", Lexems.End);
+            AddKeyword("Print", Lexems.Print);
             DecodeNextLexem();
         }
     }

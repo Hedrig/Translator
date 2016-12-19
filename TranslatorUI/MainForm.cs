@@ -81,5 +81,12 @@ namespace TranslatorUI
             Close();
         }
 
+        private void новыйToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            currentFile = null;
+            compileRichTextBox.Text = "";
+            sourceRichTextBox.Text = "";
+            resultRichTextBox.Text = "";
+        }
     }
 }
