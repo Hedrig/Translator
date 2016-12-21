@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 namespace TranslatorLib
 {
     /// <summary>
-    /// Класс, связывающий форму
+    /// Класс, связывающий форму с моделью построителя и
+    /// генератора кода.
     /// </summary>
     public static class Controller
     {

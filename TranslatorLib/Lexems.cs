@@ -12,6 +12,8 @@ namespace TranslatorLib
         Addition, Subtraction, Multiplication, Division, Assignment,
         OpenBracket, CloseBracket, Separator,
         Equal, More, Less, MoreOrEqual, LessOrEqual, NotEqual,
-        Begin, End, EOF, DeclareSeparator, Print
+        Begin, End, EOF, DeclareSeparator, Print,
+        If, Then, ElseIf, Else, EndIf,
+        Conjunction, Negation, Disjunction, BasicBoolean
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TranslatorLib
 {
-    struct Identifier
+    class Identifier
     {
         string name;
         Category category;
@@ -24,6 +24,15 @@ namespace TranslatorLib
             this.name = name;
             this.type = type;
             this.category = category;
+        }
+
+        /// <summary>
+        /// Заменяет тип Var на переданный.
+        /// </summary>
+        /// <param name="newType">новый тип.</param>
+        public void ChangeType(Type newType)
+        {
+            if (type == Type.Var) type = newType;
         }
 
         public string Name { get { return name; } }

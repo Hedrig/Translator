@@ -9,6 +9,10 @@ namespace TranslatorLib
 {
     static class Reader
     {
+
+        /// <summary>
+        /// Текущий символ.
+        /// </summary>
         public static int CurrentSymbol
         {
             get
@@ -17,6 +21,9 @@ namespace TranslatorLib
             }
         }
 
+        /// <summary>
+        /// Номер текущей строки.
+        /// </summary>
         public static int RowIndex
         {
             get
@@ -25,6 +32,9 @@ namespace TranslatorLib
             }
         }
 
+        /// <summary>
+        /// Номер текущего столбца (символа).
+        /// </summary>
         public static int ColumnIndex
         {
             get
@@ -38,6 +48,10 @@ namespace TranslatorLib
         static int columnIndex;
         static StreamReader streamReader;
 
+        /// <summary>
+        /// Перезапускает поток чтения и читает первый символ.
+        /// </summary>
+        /// <param name="filename">имя файла для запуска потока.</param>
         public static void Initialize(string filename)
         {
             if (streamReader != null) streamReader.Close();
@@ -46,6 +60,10 @@ namespace TranslatorLib
             columnIndex = 1;
             currentSymbol = streamReader.Read();
         }
+
+        /// <summary>
+        /// Прочитать следующий символ.
+        /// </summary>
         public static void ReadNextSymbol()
         {
             switch (currentSymbol)
@@ -73,6 +91,10 @@ namespace TranslatorLib
             }
             currentSymbol = streamReader.Read();
         }
+
+        /// <summary>
+        /// Закрыть поток чтения.
+        /// </summary>
         public static void Close()
         {
             streamReader.Close();

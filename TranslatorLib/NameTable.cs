@@ -13,7 +13,7 @@ namespace TranslatorLib
 
     enum Type
     {
-        None, Integer, Bool
+        None, Integer, Boolean, Var
     }
 
     static class NameTable
@@ -44,7 +44,7 @@ namespace TranslatorLib
         {
             Identifier identifier = identifiers.Find(id => id.Name == name);
 
-            if (identifier.Name == null)
+            if (identifier == null)
                 if (name != null)
                     Controller.Error(
                         "Обращение к несуществующему идентификатору '" +

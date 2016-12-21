@@ -12,15 +12,50 @@ namespace TranslatorLib
         static Lexems currentLexem;
         static string currentName;
 
+        static LexicalAnalyzer()
+        {
+            AddKeyword("Begin", Lexems.Begin);
+            AddKeyword("End", Lexems.End);
+            AddKeyword("Print", Lexems.Print);
+            AddKeyword("If", Lexems.If);
+            AddKeyword("Then", Lexems.Then);
+            AddKeyword("ElseIf", Lexems.ElseIf);
+            AddKeyword("Else", Lexems.Else);
+            AddKeyword("EndIf", Lexems.EndIf);
+            AddKeyword("true", Lexems.BasicBoolean);
+            AddKeyword("false", Lexems.BasicBoolean);
+        }
+
+        /// <summary>
+        /// Текущая лексема. Значение по умолчанию - Lexem.None.
+        /// Перезаписывается после вызова метода DecodeNextLexem.
+        /// </summary>
         public static Lexems CurrentLexem { get { return currentLexem; } }
 
+        /// <summary>
+        /// Текущее имя, соответствующее лексеме. 
+        /// Значение по умолчанию - null.
+        /// Перезаписывается после вызова метода DecodeNextLexem.
+        /// </summary>
         public static string CurrentName { get { return currentName; } }
 
+        /// <summary>
+        /// Добавляет ключевое слово и соответствующую лексему 
+        /// в таблицу ключевых слов.
+        /// </summary>
+        /// <param name="word">ключевое слово.</param>
+        /// <param name="lexem">лексема.</param>
         static void AddKeyword(string word, Lexems lexem)
         {
             keywords.Add(new Keyword(word, lexem));
         }
 
+        /// <summary>
+        /// Получает лексему, соответствующую слову.
+        /// </summary>
+        /// <param name="word">слово.</param>
+        /// <returns>лексема, соответствующая ключевому слову,
+        /// или Lexem.Identifier.</returns>
         static Lexems GetKeyword(string word)
         {
             foreach (Keyword keyword in keywords)
@@ -38,6 +73,10 @@ namespace TranslatorLib
             }
         }
 
+        /// <summary>
+        /// Разобрать следующую лексему. Сохраняет строку и соответствующую
+        /// ей лексему.
+        /// </summary>
         public static void DecodeNextLexem()
         {
             currentLexem = Lexems.None;
@@ -53,6 +92,10 @@ namespace TranslatorLib
             }
         }
 
+        /// <summary>
+        /// Разобрать символ и получить соответствующую лексему.
+        /// </summary>
+        /// <param name="symbol">код символа.</param>
         static void DecodeSymbol(int symbol)
         {
             Reader.ReadNextSymbol();
@@ -106,6 +149,9 @@ namespace TranslatorLib
             }
         }
 
+        /// <summary>
+        /// Разобрать число, состоящее из отдельных цифр.
+        /// </summary>
         static void DecodeNumber()
         {
             StringBuilder number = new StringBuilder();
@@ -119,6 +165,10 @@ namespace TranslatorLib
             currentName = number.ToString();
         }
 
+        /// <summary>
+        /// Разобрать идентификатор. Имя идентификатора должно начинаться
+        /// с буквы.
+        /// </summary>
         private static void DecodeIdentifier()
         {
             StringBuilder word = new StringBuilder();
@@ -132,13 +182,13 @@ namespace TranslatorLib
             currentLexem = GetKeyword(currentName);
         }
 
+        /// <summary>
+        /// Сбрасывает значения всех полей и обновляет список ключевых слов.
+        /// </summary>
         public static void Initialize()
         {
             currentLexem = Lexems.None;
-            keywords = new List<Keyword>();
-            AddKeyword("Begin", Lexems.Begin);
-            AddKeyword("End", Lexems.End);
-            AddKeyword("Print", Lexems.Print);
+            currentName = null;
             DecodeNextLexem();
         }
     }
