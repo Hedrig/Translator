@@ -14,6 +14,7 @@ namespace TranslatorLib
         Equal, More, Less, MoreOrEqual, LessOrEqual, NotEqual,
         Begin, End, EOF, DeclareSeparator, Print,
         If, Then, ElseIf, Else, EndIf,
-        Conjunction, Negation, Disjunction, BasicBoolean
+        Conjunction, Negation, Disjunction, BasicBoolean,
+        Case, Of, EndCase, StatementSeparator
     }
 }

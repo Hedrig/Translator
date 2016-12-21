@@ -24,6 +24,9 @@ namespace TranslatorLib
             AddKeyword("EndIf", Lexems.EndIf);
             AddKeyword("true", Lexems.BasicBoolean);
             AddKeyword("false", Lexems.BasicBoolean);
+            AddKeyword("Case", Lexems.Case);
+            AddKeyword("Of", Lexems.Of);
+            AddKeyword("EndCase", Lexems.EndCase);
         }
 
         /// <summary>
@@ -132,13 +135,14 @@ namespace TranslatorLib
                         else currentLexem = Lexems.Less;
                         break;
                     }
-                case ('+'): currentLexem = Lexems.Addition;       break;
-                case ('-'): currentLexem = Lexems.Subtraction;    break;
-                case ('*'): currentLexem = Lexems.Multiplication; break;
-                case ('/'): currentLexem = Lexems.Division;       break;
-                case ('('): currentLexem = Lexems.OpenBracket;    break;
-                case (')'): currentLexem = Lexems.CloseBracket;   break;
-                case (-1):  currentLexem = Lexems.EOF;            break;
+                case ('+'): currentLexem = Lexems.Addition;           break;
+                case ('-'): currentLexem = Lexems.Subtraction;        break;
+                case ('*'): currentLexem = Lexems.Multiplication;     break;
+                case ('/'): currentLexem = Lexems.Division;           break;
+                case ('('): currentLexem = Lexems.OpenBracket;        break;
+                case (')'): currentLexem = Lexems.CloseBracket;       break;
+                case (':'): currentLexem = Lexems.StatementSeparator; break;
+                case (-1):  currentLexem = Lexems.EOF;                break;
                 default:
                     {
                         Controller.Error(

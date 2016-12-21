@@ -228,7 +228,7 @@ namespace TranslatorLib
         /// помещает в стек 1(True) или 0(False).
         /// </summary>
         /// <param name="compareType">операция сравнения.</param>
-        internal static void ConditionalJump(Lexems compareType)
+        internal static void Compare(Lexems compareType)
         {
             string jumpType;
             switch (compareType)

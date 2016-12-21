@@ -144,7 +144,56 @@ namespace TranslatorLib
                 case (Lexems.If):
                     DecodeBranching();
                     break;
+                case (Lexems.Case):
+                    DecodeCasing();
+                    break;
             }
+        }
+
+        /// <summary>
+        /// Разбирает блок Case... Of... EndCase. 
+        /// </summary>
+        private static void DecodeCasing()
+        {
+            LexicalAnalyzer.DecodeNextLexem();
+            CheckLexem(Lexems.Identifier);
+            Identifier id = NameTable.FindByName(LexicalAnalyzer.CurrentName);
+            string nextLabel = CodeGenerator.GetNextLabel();
+            string exitLabel = CodeGenerator.GetNextLabel();
+            LexicalAnalyzer.DecodeNextLexem();
+            CheckLexemAndProceed(Lexems.Of);
+            if (id != null)
+            {
+                LexicalAnalyzer.DecodeNextLexem();
+                while (LexicalAnalyzer.CurrentLexem == Lexems.Number)
+                {
+                    // Поскольку транслятор однопроходный, неизвестно, 
+                    // когда наступит конец блока, поэтому шагать приходится 
+                    // от значения к значению
+                    CodeGenerator.PlaceLabel(nextLabel);
+                    nextLabel = CodeGenerator.GetNextLabel();
+                    CodeGenerator.PushValue(id.Name);
+                    CodeGenerator.PushValue(LexicalAnalyzer.CurrentName);
+                    CodeGenerator.Compare(Lexems.Equal);
+                    CodeGenerator.JumpIfFalse(nextLabel);
+                    DecodeCaseBlock();
+                    if (LexicalAnalyzer.CurrentLexem != Lexems.EndCase)
+                        CodeGenerator.Jump(exitLabel);
+                }
+                CheckLexemAndProceed(Lexems.EndCase);
+                CodeGenerator.PlaceLabel(nextLabel);
+                CodeGenerator.PlaceLabel(exitLabel);
+            }
+        }
+
+        /// <summary>
+        /// Разбор блока выражений после константы в блоке Case.
+        /// </summary>
+        private static void DecodeCaseBlock()
+        {
+            LexicalAnalyzer.DecodeNextLexem();
+            CheckLexemAndProceed(Lexems.StatementSeparator);
+            DecodeInstructionSequence();
         }
 
         static string currentLabel;
@@ -243,7 +292,7 @@ namespace TranslatorLib
                 case (Lexems.Equal):
                     Lexems compareType = LexicalAnalyzer.CurrentLexem;
                     Type result = DecodeLogicalExpression(tLeft);
-                    CodeGenerator.ConditionalJump(
+                    CodeGenerator.Compare(
                         compareType);
                     return result;
 
